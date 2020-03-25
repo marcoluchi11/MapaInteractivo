@@ -3,6 +3,15 @@ geocodificadorModulo = (function () {
   
     // Permite obtener las coordenadas y las usa con la función llamada por parámtero
   function usaDireccion (direccion, funcionALlamar) {
+          var nuevaDireccion = new google.maps.Geocoder();
+          nuevaDireccion.geocode({address: direccion},function(results,status){
+              if(status === 'OK'){
+                funcionALlamar(direccion, results[0].geometry.location);
+              }else{
+                alert('Mensaje de error: ' + status);
+              }
+          });
+          
         /* Completar la función usaDireccion(dirección,funcionALlamar)
      para que se obtengan las coordenadas a partir de la dirección pasada por parámetro
      y que llame a la función pasada por parámetro con los siguientes parámetros
