@@ -19,6 +19,24 @@ lugaresModulo = (function () {
     // Busca lugares con el tipo especificado en el campo de TipoDeLugar
 
   function buscarCerca (posicion) {
+    //  var limites = new google.maps.LatLngBounds(posicion);
+    var solicitud = {
+
+      radius: $('#radio').val(),
+      tipoLugar: $('#tipoDeLugar').val(),
+      location: posicion
+    }
+    
+     servicioLugares = new google.maps.places.PlacesService(mapa);
+
+     servicioLugares.nearbySearch(solicitud, function(results,status){
+
+
+          marcadorModulo.marcarLugares(results, status);
+
+     });
+
+
         /* Completar la función buscarCerca  que realice la búsqueda de los lugares
     del tipo (tipodeLugar) y con el radio indicados en el HTML cerca del lugar
     pasado como parámetro y llame a la función marcarLugares. */
