@@ -4,7 +4,29 @@ lugaresModulo = (function () {
     // Completa las direcciones ingresadas por el usuario a y establece los límites
     // con un círculo cuyo radio es de 20000 metros.
   function autocompletar () {
-        /* Completar la función autocompletar(): autocompleta los 4 campos de texto de la
+
+   var inputPrincipal = document.getElementById('direccion');
+    var desde = document.getElementById('desde');
+    var hasta = document.getElementById('hasta');
+    var agregarIntermedio = document.getElementById('agregar');
+    var radio= new google.maps.Circle( {
+      center: mapa.center,
+      radius: 20000,
+      })  
+    var autocompletado = new google.maps.places.Autocomplete(inputPrincipal)  
+     var autocompletado2 = new google.maps.places.Autocomplete(desde,{
+      bounds: radio.getBounds(),
+      strictBounds: true,
+     });
+    var autocompletado3 = new google.maps.places.Autocomplete(hasta,{
+      bounds: radio.getBounds(),
+      strictBounds: true,
+    });
+    var autocompletado4 = new google.maps.places.Autocomplete(agregarIntermedio,{
+      bounds: radio.getBounds(),
+      strictBounds: true,
+    });
+     /* Completar la función autocompletar(): autocompleta los 4 campos de texto de la
         página (las direcciones ingresables por el usuario).
         Para esto creá un círculo con radio de 20000 metros y usalo para fijar
         los límites de la búsqueda de dirección. El círculo no se debe ver en el mapa. */
@@ -30,10 +52,7 @@ lugaresModulo = (function () {
      servicioLugares = new google.maps.places.PlacesService(mapa);
 
      servicioLugares.nearbySearch(solicitud, function(results,status){
-
-
           marcadorModulo.marcarLugares(results, status);
-
      });
 
 
