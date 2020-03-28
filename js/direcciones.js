@@ -91,7 +91,36 @@ direccionesModulo = (function () {
 
     // Calcula la ruta entre los puntos Desde y Hasta con los puntosIntermedios
     // dependiendo de la formaDeIr que puede ser Caminando, Auto o Bus/Subterraneo/Tren
+
   function calcularYMostrarRutas () {
+   // Falta RESOLVER TEMA TRANPORTE PUBLICO
+    switch($('#comoIr').val()){
+
+      case 'Auto':  
+                    var Transporte = 'DRIVING';
+      case 'Caminando':
+                    var Transporte = 'WALKING';
+      case 'Transporte Público':
+                    var Transporte = 'TRANSIT';
+    }
+
+    // var servicioDirecciones // Servicio que calcula las direcciones
+    // var mostradorDirecciones // Servicio muestra las direcciones
+         servicioDirecciones = new google.maps.DirectionsService();
+         mostradorDirecciones = new google.maps.DirectionsRenderer();
+         mostradorDirecciones.setMap(mapa)
+         var solicitud = {
+          origin: $('#desde').val(),
+              destination: $('#hasta').val(),
+              travelMode: Transporte,
+        };
+        servicioDirecciones.route(solicitud, function(resultado, estado) {
+          if (estado == 'OK') {
+            console.log(estado);
+            mostradorDirecciones.setDirections(resultado);
+            
+          }
+        });
 
         /* Completar la función calcularYMostrarRutas , que dependiendo de la forma en que el
          usuario quiere ir de un camino al otro, calcula la ruta entre esas dos posiciones
