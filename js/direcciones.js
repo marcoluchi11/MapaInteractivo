@@ -95,33 +95,57 @@ direccionesModulo = (function () {
   function calcularYMostrarRutas () {
    // Falta RESOLVER TEMA TRANPORTE PUBLICO
     switch($('#comoIr').val()){
-
+      
       case 'Auto':  
+      console.log($('#comoIr').val());
                     var Transporte = 'DRIVING';
       case 'Caminando':
+        console.log($('#comoIr').val());
                     var Transporte = 'WALKING';
       case 'Transporte Público':
-                    var Transporte = 'TRANSIT';
+        console.log($('#comoIr').val());
+                    var Transporte = google.maps.TransitMode.BUS;
     }
 
     // var servicioDirecciones // Servicio que calcula las direcciones
     // var mostradorDirecciones // Servicio muestra las direcciones
+      if (mostradorDirecciones != null) {
+          mostradorDirecciones.setMap(null);
+          mostradorDirecciones = null;
+  }
          servicioDirecciones = new google.maps.DirectionsService();
          mostradorDirecciones = new google.maps.DirectionsRenderer();
-         mostradorDirecciones.setMap(mapa)
+         
+         function obtenerPuntosIntermedios(){
+                  var pIntermedioFinal = [];
+                  var pIntermedios = document.getElementById('puntosIntermedios');
+                 for(var i = 0; i<pIntermedios.length;i++){
+                          var waypoints = {location: pIntermedios[i].textContent,}
+                            pIntermedioFinal.push(waypoints);
+                          }
+                  // var latlngStr = input.split(',', 2);
+                   // var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
+                          return pIntermedioFinal;
+         }
+    //     mostradorDirecciones.setMap(mapa)
          var solicitud = {
           origin: $('#desde').val(),
               destination: $('#hasta').val(),
-              travelMode: Transporte,
+              travelMode: 'DRIVING',
+              waypoints: obtenerPuntosIntermedios(),
         };
+        console.log(solicitud);
         servicioDirecciones.route(solicitud, function(resultado, estado) {
           if (estado == 'OK') {
             console.log(estado);
+            console.log(mostradorDirecciones.setDirections(resultado));
             mostradorDirecciones.setDirections(resultado);
-            
+            mostradorDirecciones.setMap(mapa)
           }
         });
+        console.log(mostradorDirecciones);
 
+       
         /* Completar la función calcularYMostrarRutas , que dependiendo de la forma en que el
          usuario quiere ir de un camino al otro, calcula la ruta entre esas dos posiciones
          y luego muestra la ruta. */
