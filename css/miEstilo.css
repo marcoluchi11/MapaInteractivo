@@ -156,6 +156,11 @@ output {
     vertical-align: baseline;
     width: calc(100% - 70px);
 }
+#directions-panel-summary{
+
+    padding-left: 10px;
+    font-style: italic;
+}
 
 .input-label,
 label {
