@@ -9,19 +9,20 @@ lugaresModulo = (function () {
     var hasta = document.getElementById('hasta');
     var agregarIntermedio = document.getElementById('agregar');
     var radio= new google.maps.Circle( {
+      visible: false,
       center: mapa.center,
       radius: 20000,
       })  
-    var autocompletado = new google.maps.places.Autocomplete(inputPrincipal)  
-     var autocompletado2 = new google.maps.places.Autocomplete(desde,{
+    var direccionPrincipalAC = new google.maps.places.Autocomplete(inputPrincipal)  
+     var desdeAC = new google.maps.places.Autocomplete(desde,{
       bounds: radio.getBounds(),
       strictBounds: true,
      });
-    var autocompletado3 = new google.maps.places.Autocomplete(hasta,{
+    var hastaAC = new google.maps.places.Autocomplete(hasta,{
       bounds: radio.getBounds(),
       strictBounds: true,
     });
-    var autocompletado4 = new google.maps.places.Autocomplete(agregarIntermedio,{
+    var intermedioAC = new google.maps.places.Autocomplete(agregarIntermedio,{
       bounds: radio.getBounds(),
       strictBounds: true,
     });
@@ -40,13 +41,13 @@ lugaresModulo = (function () {
     // Busca lugares con el tipo especificado en el campo de TipoDeLugar
 
   function buscarCerca (posicion) {
-    //  var limites = new google.maps.LatLngBounds(posicion);
     var solicitud = {
 
       radius: $('#radio').val(),
-      tipoLugar: $('#tipoDeLugar').val(),
+      name: $('#tipoDeLugar').val(),
       location: posicion
     }
+    console.log(solicitud.tipoLugar);
     
      servicioLugares = new google.maps.places.PlacesService(mapa);
 

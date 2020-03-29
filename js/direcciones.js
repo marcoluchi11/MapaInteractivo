@@ -93,11 +93,10 @@ direccionesModulo = (function () {
     // dependiendo de la formaDeIr que puede ser Caminando, Auto o Bus/Subterraneo/Tren
 
   function calcularYMostrarRutas () {
-   // Falta RESOLVER TEMA TRANPORTE PUBLICO
-   var Transporte = '';
+    var Transporte;
     var seleccionarModo = document.getElementById('comoIr').value
     var pasosASeguir = document.getElementById('directions-panel-summary');
-    while(pasosASeguir.firstChild) { //Aca borro los p creados para la guia de los pasos a seguir
+    while(pasosASeguir.firstChild) { //Aca borro los div creados para la guia de los pasos a seguir
       pasosASeguir.firstChild.remove();
   }
     // var servicioDirecciones // Servicio que calcula las direcciones
@@ -105,7 +104,7 @@ direccionesModulo = (function () {
       if (mostradorDirecciones != null) {
           mostradorDirecciones.setMap(null);
           mostradorDirecciones = null;
-          }
+        }
       servicioDirecciones = new google.maps.DirectionsService();
       mostradorDirecciones = new google.maps.DirectionsRenderer();
       
@@ -128,17 +127,20 @@ direccionesModulo = (function () {
             if (estado == 'OK') {
                           mostradorDirecciones.setDirections(resultado);
                           mostradorDirecciones.setMap(mapa)
-              }
-            var myRoute = resultado.routes[0].legs[0];
-			      for (var i = 0; i < myRoute.steps.length; i++) {
-                      var StrippedString = myRoute.steps[i].instructions.replace(/(<([^>]+)>)/ig,"");
+                    }
+            marcadorModulo.agregarMarcadorRuta(desde, 'Inicio', true);
+            marcadorModulo.agregarMarcadorRuta(hasta, 'Fin', true);
+            marcadorModulo.agregarMarcadorRuta(agregar, 'Intermedio', true);
+            var miRuta = resultado.routes[0].legs[0];
+			      for (var i = 0; i < miRuta.steps.length; i++) {
+                      var StringHTML = miRuta.steps[i].instructions.replace(/(<([^>]+)>)/ig,"");
                       var nuevoDiv = document.createElement('div');
                       var nuevoBreak = document.createElement('br');
-                      nuevoDiv.textContent = StrippedString;
+                      nuevoDiv.textContent = StringHTML;
                       pasosASeguir.appendChild(nuevoDiv);
                       pasosASeguir.appendChild(nuevoBreak);
-		  }
-        });
+		                 }
+      });
         /* Completar la función calcularYMostrarRutas , que dependiendo de la forma en que el
          usuario quiere ir de un camino al otro, calcula la ruta entre esas dos posiciones
          y luego muestra la ruta. */
