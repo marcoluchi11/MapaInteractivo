@@ -4,7 +4,6 @@ lugaresModulo = (function () {
     // Completa las direcciones ingresadas por el usuario a y establece los límites
     // con un círculo cuyo radio es de 20000 metros.
   function autocompletar () {
- // FALTA OPTIMIZACION 
    var inputPrincipal = document.getElementById('direccion');
     var desde = document.getElementById('desde');
     var hasta = document.getElementById('hasta');
